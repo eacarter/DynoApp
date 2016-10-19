@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DynoApp</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_new_dyno_test">newDynoTestActivity</string>
+</resources>
