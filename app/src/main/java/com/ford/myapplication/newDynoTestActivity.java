@@ -19,10 +19,11 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-public class newDynoTestActivity extends Activity implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class newDynoTestActivity extends Activity implements LocationListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     boolean testStarted = false;
     LocationRequest mLocationRequest;
@@ -31,12 +32,15 @@ public class newDynoTestActivity extends Activity implements GoogleApiClient.OnC
     CountDownTimer countdowntimer;
     TextView timer;
     TextView remaining;
+    VehicleData Data = new VehicleData();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_dyno_test);
+
+        testStarted = true;
 
         buildGoogleApiClient();
 
@@ -45,14 +49,12 @@ public class newDynoTestActivity extends Activity implements GoogleApiClient.OnC
         remaining = (TextView) findViewById(R.id.timeText);
         timer = (TextView) findViewById(R.id.timing);
 
+        startTest(testStarted);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                testStarted = true;
-                startTest(testStarted);
 
 
             }
@@ -104,7 +106,7 @@ public class newDynoTestActivity extends Activity implements GoogleApiClient.OnC
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleClientApi);
 
         if (mLastLocation != null) {
-
+            startLocationUpdates();
         } else {
             Log.d("location", "No ciger");
         }
@@ -130,13 +132,14 @@ public class newDynoTestActivity extends Activity implements GoogleApiClient.OnC
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        stopLocationUpdates();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
+
 
     private void startTest(boolean start) {
 
@@ -146,7 +149,19 @@ public class newDynoTestActivity extends Activity implements GoogleApiClient.OnC
 
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+
+       // Data.setmSpeed(location.getSpeed());
+        Data.setmLat(location.getLatitude());
+        Data.setmLong(location.getLongitude());
+        Log.d("Location", String.valueOf(Data.getmLat()+ ","+ Data.getmLong()));
+    }
+
     public class TestCounter extends CountDownTimer {
+
+        double temp;
+        double speed;
 
         public TestCounter(long start, long interval){
             super(start, interval);
@@ -156,14 +171,26 @@ public class newDynoTestActivity extends Activity implements GoogleApiClient.OnC
             public void onTick(long millisUntilFinished) {
                 timer.setText(String.valueOf(millisUntilFinished/1000));
 
+                //onLocationChanged();
+
+
+                  Log.d("speed", String.valueOf(temp));
+                 // Log.d("Location", String.valueOf(Data.getmLat()+ ","+ Data.getmLong()));
 
             }
 
+//            public final void cancel(){
+//                Intent intent = new Intent(newDynoTestActivity.this, reportActivity.class);
+//                intent.putExtra("speed",temp);
+//                startActivity(intent);
+//            }
+
             @Override
             public void onFinish() {
-//                Intent intent = new Intent(newDynoTestActivity.this, resultsActivity.class);
-//                intent.putExtra();
-//                startActivity(intent);
+               // newDynoTestActivity.this.finish();
+                Intent intent = new Intent(newDynoTestActivity.this, reportActivity.class);
+                intent.putExtra("Speed",Data.getmSpeed());
+                startActivity(intent);
             }
         }
     }

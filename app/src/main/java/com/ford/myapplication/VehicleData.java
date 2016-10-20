@@ -14,7 +14,16 @@ public class VehicleData {
     int rpm;
     double engTorque;
     double extTemps;
+    double horsePower;
     Location disToPosition;
+
+    public double getHorsePower() {
+        return horsePower;
+    }
+
+    public void setHorsePower(double power) {
+        this.horsePower = ((getEngTorque() * getRpm())/5252);
+    }
 
     public float getmSpeed() {
         return mSpeed;

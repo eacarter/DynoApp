@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.ford.myapplication.reportActivity">
+
+    <TextView
+        android:id="@+id/googleText"
+        android:text="Google Maps Readings"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000"
+        android:paddingTop="5pt"
+        android:layout_below="@id/googleText"/>
+
+    <RelativeLayout
+        android:id="@+id/speed"
+        android:layout_below="@id/googleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/speedText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top Speed: "/>
+
+        <TextView
+            android:id="@+id/speedNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/speedText"
+            android:text="N/A"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/altitude"
+        android:layout_below="@id/speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/altText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Max Altitude: "/>
+
+        <TextView
+            android:id="@+id/altNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/altText"
+            android:text="N/A"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/zeroSixty"
+        android:layout_below="@id/altitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/zeroSixtyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0-to-60: "/>
+        <TextView
+            android:id="@+id/zeroSixtyNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/zeroSixtyText"
+            android:text="N/A"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000"
+        android:paddingTop="5pt"
+        android:layout_below="@id/zeroSixty"/>
+
+    <TextView
+        android:id="@+id/sdlText"
+        android:text="Smart Device Link Readings"
+        android:textColor="#000"
+        android:layout_below="@id/zeroSixty"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/maxRpm"
+        android:layout_below="@id/sdlText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/rpmText"
+            android:text="Max Rpm: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/rpmNum"
+            android:text="N/A "
+            android:layout_toEndOf="@id/rpmText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/maxTorque"
+        android:layout_below="@id/maxRpm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/torqueText"
+            android:text="Max Torque: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/torqueNum"
+            android:text="N/A "
+            android:layout_toEndOf="@id/torqueText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/maxExtTemp"
+        android:layout_below="@id/maxTorque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/extTempText"
+            android:text="Max External Temperature: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/extTempNum"
+            android:text="N/A "
+            android:layout_toEndOf="@id/extTempText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/maxHorsePower"
+        android:layout_below="@id/maxExtTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/horsePowerText"
+            android:text="Max Horse Power: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/horsePowerNum"
+            android:text="N/A "
+            android:layout_toEndOf="@id/horsePowerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</RelativeLayout>

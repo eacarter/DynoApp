@@ -37,7 +37,8 @@
         <activity
             android:name=".newDynoTestActivity"
             android:label="@string/title_activity_new_dyno_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".reportActivity"></activity>
     </application>
 
 </manifest>
