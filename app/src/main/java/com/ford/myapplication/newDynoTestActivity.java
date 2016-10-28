@@ -36,6 +36,7 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
     TextView remaining;
 
 
+
     TextView lat;
     TextView log;
 
@@ -181,8 +182,10 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
         Data.setmSpeed(location.getSpeed());
         Data.setmLat(location.getLatitude());
         Data.setmLong(location.getLongitude());
+        Data.setAltitude(location.getAltitude());
 
-        Toast.makeText(this, "Location Changed", Toast.LENGTH_LONG).show();
+
+        //Toast.makeText(this, "Location Changed", Toast.LENGTH_LONG).show();
 
         //Log.d("Location", String.valueOf(Data.getmLat()+ ","+ Data.getmLong()+","+Data.getmSpeed()));
     }
@@ -190,7 +193,8 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
     public class TestCounter extends CountDownTimer {
 
         double temp;
-        double speed;
+        float speed;
+        double avgSpeed;
 
         public TestCounter(long start, long interval){
             super(start, interval);
@@ -199,19 +203,25 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
             @Override
             public void onTick(long millisUntilFinished) {
                 timer.setText(String.valueOf(millisUntilFinished / 1000));
-                lat.setText(String.valueOf(Data.getmLat()));
-                log.setText(String.valueOf(Data.getmLong()));
+
+                if(Data.getmSpeed() > speed){
+                    speed = Data.getmSpeed();
+                }
+
+                lat.setText(String.valueOf(speed));
+                log.setText(String.valueOf(Data.getAltitude()));
 
                 Log.d("Location", String.valueOf(Data.getmLat()+ ","+ Data.getmLong()+","+Data.getmSpeed()));
             }
             @Override
             public void onFinish() {
 
-                    speed = Data.getmSpeed();
+
 
                   newDynoTestActivity.this.finish();
                   Intent intent = new Intent(newDynoTestActivity.this, reportActivity.class);
-                  intent.putExtra("Speed",speed);
+                  intent.putExtra("Speed",Data.metersToMiles(speed));
+                  intent.putExtra("Altitude", Data.getAltitude());
                   startActivity(intent);
             }
         }

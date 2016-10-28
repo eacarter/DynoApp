@@ -88,4 +88,9 @@ public class VehicleData {
     public void setDisToPosition(Location disToPosition) {
         this.disToPosition = disToPosition;
     }
+
+    public double metersToMiles(float speed){
+        double milesSpeed = speed*2.236936;
+        return milesSpeed;
+    }
 }

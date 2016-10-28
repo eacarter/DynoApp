@@ -10,6 +10,7 @@ import org.w3c.dom.Text;
 public class reportActivity extends AppCompatActivity {
 
     TextView speed;
+    TextView avgSpeed;
     TextView altitude;
     TextView zero2sixty;
     TextView rpm;
@@ -28,6 +29,7 @@ public class reportActivity extends AppCompatActivity {
 
 
         speed=(TextView)findViewById(R.id.speedNum);
+        avgSpeed=(TextView)findViewById(R.id.avgNum);
         altitude=(TextView)findViewById(R.id.altNum);
         zero2sixty=(TextView)findViewById(R.id.zeroSixtyNum);
         rpm=(TextView)findViewById(R.id.rpmNum);
@@ -36,6 +38,7 @@ public class reportActivity extends AppCompatActivity {
         horPow=(TextView)findViewById(R.id.horsePowerNum);
 
         speed.setText(String.valueOf(extras.getDouble("Speed")));
+        altitude.setText(String.valueOf(extras.getDouble("Altitude")));
 
     }
 
