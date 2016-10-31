@@ -7,7 +7,7 @@ import android.location.Location;
  */
 public class VehicleData {
 
-    float mSpeed;
+   double mSpeed;
     double mLong;
     double mLat;
     double altitude;
@@ -25,11 +25,11 @@ public class VehicleData {
         this.horsePower = ((getEngTorque() * getRpm())/5252);
     }
 
-    public float getmSpeed() {
+    public double getmSpeed() {
         return mSpeed;
     }
 
-    public void setmSpeed(float mSpeed) {
+    public void setmSpeed(double mSpeed) {
         this.mSpeed = mSpeed;
     }
 
@@ -89,7 +89,7 @@ public class VehicleData {
         this.disToPosition = disToPosition;
     }
 
-    public double metersToMiles(float speed){
+    public double metersToMiles(double speed){
         double milesSpeed = speed*2.236936;
         return milesSpeed;
     }

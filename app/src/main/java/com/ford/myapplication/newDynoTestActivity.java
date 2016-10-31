@@ -35,8 +35,6 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
     TextView timer;
     TextView remaining;
 
-
-
     TextView lat;
     TextView log;
 
@@ -66,8 +64,9 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
+                testStarted = false;
+                countdowntimer.cancel();
+                countdowntimer.onFinish();
             }
         });
     }
@@ -113,8 +112,12 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
     @Override
     public void onStop() {
         super.onStop();
+
+        testStarted = false;
+
         if (mGoogleClientApi.isConnected()) {
             mGoogleClientApi.disconnect();
+            startTest(testStarted);
         }
     }
 
@@ -165,36 +168,42 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
+        if(!mGoogleClientApi.isConnected()) {
+            buildGoogleApiClient();
+        }
     }
 
 
     private void startTest(boolean start) {
-
         if (start) {
             countdowntimer.start();
         }
-
+        else{
+            countdowntimer.cancel();
+        }
     }
 
     @Override
     public void onLocationChanged(Location location) {
+        if (mLastLocation != null) {
+            Data.setmSpeed( Math.sqrt(
+                    Math.pow(location.getLongitude() - mLastLocation.getLongitude(), 2.0) +
+                    Math.pow(location.getLatitude() - mLastLocation.getLatitude(), 2.0)) /
+                    (location.getTime() - this.mLastLocation.getTime())
+            );
 
-        Data.setmSpeed(location.getSpeed());
+            if(location.hasSpeed()){
+                Data.setmSpeed(location.getSpeed());
+                mLastLocation = location;
+            }
+        }
         Data.setmLat(location.getLatitude());
         Data.setmLong(location.getLongitude());
         Data.setAltitude(location.getAltitude());
-
-
-        //Toast.makeText(this, "Location Changed", Toast.LENGTH_LONG).show();
-
-        //Log.d("Location", String.valueOf(Data.getmLat()+ ","+ Data.getmLong()+","+Data.getmSpeed()));
     }
 
     public class TestCounter extends CountDownTimer {
-
-        double temp;
-        float speed;
-        double avgSpeed;
+        double speed;
 
         public TestCounter(long start, long interval){
             super(start, interval);
@@ -208,20 +217,20 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
                     speed = Data.getmSpeed();
                 }
 
-                lat.setText(String.valueOf(speed));
+                lat.setText(String.valueOf(Data.getmSpeed()));
                 log.setText(String.valueOf(Data.getAltitude()));
 
                 Log.d("Location", String.valueOf(Data.getmLat()+ ","+ Data.getmLong()+","+Data.getmSpeed()));
             }
+
+
             @Override
             public void onFinish() {
-
-
-
                   newDynoTestActivity.this.finish();
                   Intent intent = new Intent(newDynoTestActivity.this, reportActivity.class);
                   intent.putExtra("Speed",Data.metersToMiles(speed));
                   intent.putExtra("Altitude", Data.getAltitude());
+                  intent.putExtra("fromMain", false);
                   startActivity(intent);
             }
         }

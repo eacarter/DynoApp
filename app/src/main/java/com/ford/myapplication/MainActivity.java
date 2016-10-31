@@ -26,8 +26,9 @@ public class MainActivity extends Activity implements GoogleApiClient.OnConnecti
     GoogleApiClient mGoogleClientApi;
     LocationRequest mLocationRequest;
     Location mLastLocation;
+    Intent newActivity;
     Button index;
-    Button newtest;
+    Button newTest;
     Button point;
 
     @Override
@@ -36,27 +37,38 @@ public class MainActivity extends Activity implements GoogleApiClient.OnConnecti
         setContentView(R.layout.activity_main);
 
         index = (Button) findViewById(R.id.index);
-        newtest = (Button) findViewById(R.id.newtest);
+        newTest = (Button) findViewById(R.id.newtest);
         point = (Button) findViewById(R.id.point);
 
-        newtest.setOnClickListener(new View.OnClickListener() {
+        index.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent test = new Intent(MainActivity.this, newDynoTestActivity.class);
-                startActivity(test);
+                finish();
+                newActivity = new Intent(MainActivity.this, reportActivity.class);
+                newActivity.putExtra("fromMain", true);
+                startActivity(newActivity);
+            }
+        });
+
+        newTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                newActivity = new Intent(MainActivity.this, newDynoTestActivity.class);
+                startActivity(newActivity);
             }
         });
 
         point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent maps = new Intent(MainActivity.this, mapsActivity.class);
-                maps.putExtra("Latitude", mLastLocation.getLatitude());
-                maps.putExtra("Longitude", mLastLocation.getLongitude());
-                startActivity(maps);
+                finish();
+                newActivity = new Intent(MainActivity.this, mapsActivity.class);
+                newActivity.putExtra("Latitude", mLastLocation.getLatitude());
+                newActivity.putExtra("Longitude", mLastLocation.getLongitude());
+                startActivity(newActivity);
             }
         });
-
 
         mRequestingLocationUpdates = false;
 
@@ -96,41 +108,12 @@ public class MainActivity extends Activity implements GoogleApiClient.OnConnecti
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+           // blah blah blah
             return;
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleClientApi);
-
-        if (mLastLocation != null) {
-
-        } else {
-            Log.d("location", "No ciger");
-        }
     }
 
-    public void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleClientApi, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
-    }
-
-    public void stopLocationUpdates(){
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleClientApi, (com.google.android.gms.location.LocationListener) this);
-    }
 
     @Override
     public void onConnectionSuspended(int i) {

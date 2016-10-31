@@ -37,8 +37,13 @@ public class reportActivity extends AppCompatActivity {
         extTemp=(TextView)findViewById(R.id.extTempNum);
         horPow=(TextView)findViewById(R.id.horsePowerNum);
 
-        speed.setText(String.valueOf(extras.getDouble("Speed")));
-        altitude.setText(String.valueOf(extras.getDouble("Altitude")));
+        if(!extras.getBoolean("fromMain")) {
+            speed.setText(String.valueOf(extras.getDouble("Speed")));
+            altitude.setText(String.valueOf(extras.getDouble("Altitude")));
+        }
+        else{
+            //pull data from shared preferences
+        }
 
     }
 
