@@ -28,6 +28,8 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
 
     boolean testStarted = false;
     boolean mRequestingLocationUpdates;
+    double speed;
+
     LocationRequest mLocationRequest;
     GoogleApiClient mGoogleClientApi;
     Location mLastLocation;
@@ -186,20 +188,24 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
     @Override
     public void onLocationChanged(Location location) {
         if (mLastLocation != null) {
-            Data.setmSpeed( Math.sqrt(
+            speed = metersToMiles(Math.sqrt(
                     Math.pow(location.getLongitude() - mLastLocation.getLongitude(), 2.0) +
                     Math.pow(location.getLatitude() - mLastLocation.getLatitude(), 2.0)) /
-                    (location.getTime() - this.mLastLocation.getTime())
-            );
+                    (location.getTime() - this.mLastLocation.getTime()));
 
             if(location.hasSpeed()){
-                Data.setmSpeed(location.getSpeed());
+               speed = metersToMiles(location.getSpeed());
                 mLastLocation = location;
             }
         }
         Data.setmLat(location.getLatitude());
         Data.setmLong(location.getLongitude());
         Data.setAltitude(location.getAltitude());
+    }
+
+    public double metersToMiles(double mph){
+        speed = mph*(3600/1600);
+        return speed;
     }
 
     public class TestCounter extends CountDownTimer {
@@ -213,8 +219,8 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
             public void onTick(long millisUntilFinished) {
                 timer.setText(String.valueOf(millisUntilFinished / 1000));
 
-                if(Data.getmSpeed() > speed){
-                    speed = Data.getmSpeed();
+                if(speed > Data.getmSpeed()){
+                    Data.setmSpeed(speed);
                 }
 
                 lat.setText(String.valueOf(Data.getmSpeed()));
@@ -228,7 +234,7 @@ public class newDynoTestActivity extends Activity implements LocationListener, G
             public void onFinish() {
                   newDynoTestActivity.this.finish();
                   Intent intent = new Intent(newDynoTestActivity.this, reportActivity.class);
-                  intent.putExtra("Speed",Data.metersToMiles(speed));
+                  intent.putExtra("Speed", speed);
                   intent.putExtra("Altitude", Data.getAltitude());
                   intent.putExtra("fromMain", false);
                   startActivity(intent);
