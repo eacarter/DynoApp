@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../...iml" filepath="$PROJECT_DIR$/../...iml" />
+      <module fileurl="file://$PROJECT_DIR$/DynoApp.iml" filepath="$PROJECT_DIR$/DynoApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sdl_android/sdl_android.iml" filepath="$PROJECT_DIR$/../sdl_android/sdl_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sdl_android/sdl_android_lib/sdl_android_lib.iml" filepath="$PROJECT_DIR$/../sdl_android/sdl_android_lib/sdl_android_lib.iml" />
     </modules>
   </component>
 </project>
